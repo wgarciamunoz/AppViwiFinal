@@ -13,7 +13,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-const val BASE_URL = "http://localhost:8080/AppViwi_pruebasJava/rest/"
+const val BASE_URL = "http://80.241.211.8/appviwiback/rest/"
 class MainActivity : AppCompatActivity() {
 
     private var tts: TextToSpeech? = null
@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
                 response: Response<List<BeaconsItem>?>
             ) {
                 val response = response.body()!!
-
+                Log.d("MainAc", "response: " + response[0].BeaconNombre )
                 myAdapter = MyUserAdapter(baseContext, response)
                 myAdapter.notifyDataSetChanged()
                 recyclerView.adapter = myAdapter
@@ -71,5 +71,13 @@ class MainActivity : AppCompatActivity() {
 
             }
         })
+    }
+
+    companion object {
+        val TAG = "MainActivity"
+        val PERMISSION_REQUEST_BACKGROUND_LOCATION = 0
+        val PERMISSION_REQUEST_BLUETOOTH_SCAN = 1
+        val PERMISSION_REQUEST_BLUETOOTH_CONNECT = 2
+        val PERMISSION_REQUEST_FINE_LOCATION = 3
     }
 }
