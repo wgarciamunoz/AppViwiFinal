@@ -1,8 +1,10 @@
 package com.wgsoft.appviwifinal
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -10,10 +12,7 @@ import android.os.RemoteException
 import android.os.Vibrator
 import android.speech.tts.TextToSpeech
 import android.util.Log
-import android.view.View
-import android.widget.ArrayAdapter
 import android.widget.Button
-import android.widget.ListView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -33,6 +32,19 @@ class activity_user_detailed :  AppCompatActivity(), RangeNotifier, TextToSpeech
     var neverAskAgainPermissions = ArrayList<String>()
     private var tts: TextToSpeech? = null
     var idBeacon: String =""
+    var isDestino = false
+    var idBeaconObstaculo = ""
+    var idBeaconDestino = ""
+
+    // on below line we are creating
+    // a variable for shared preferences.
+    lateinit var sharedPreferences: SharedPreferences
+
+    // on below line we are creating a variable
+    // for prefs key and email key and pwd key.
+
+    var IDBEACON_DESTINO = ""
+    var IDBEACON_OBSTACULO = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,12 +75,110 @@ class activity_user_detailed :  AppCompatActivity(), RangeNotifier, TextToSpeech
         val name = bundle!!.getString("name")
         val username = bundle!!.getString("descripcionDestino")
         val descripcionObstaculo = bundle!!.getString("descripcionObstaculo")
+        var idBeaconDestino = bundle!!.getString("BeaconUUID")
 
+        Log.d("onCreate", "BeaconUUID " + idBeaconDestino)
         nameDetalle.text = username + " " + descripcionObstaculo
         nameDestino.text = name
+        IDBEACON_OBSTACULO = "426c7565-4368-6172-6d42-6561636f6e92"
+        destinoObstaculo(idBeaconObstaculo, idBeaconDestino)
 
-        destinoObstaculo()
+        if (idBeaconDestino != null) {
+            IDBEACON_DESTINO = idBeaconDestino
+        }
+        sharedPreferences = getSharedPreferences(IDBEACON_DESTINO, Context.MODE_PRIVATE)
+        sharedPreferences = getSharedPreferences(IDBEACON_OBSTACULO, Context.MODE_PRIVATE)
 
+    }
+    fun destinoObstaculo(idBeaconObstaculo: String, idBeaconDestino: String?) {
+        Log.d("destinoObstaculo", "destinoObstaculo " + idBeaconObstaculo)
+        Log.d("destinoObstaculo", "idBeaconDestino " + idBeaconDestino)
+        val beaconManager = BeaconManager.getInstanceForApplication(this)
+        Log.d(TAG, "destinoObstaculo " + beaconManager.rangedRegions.size.toString() )
+        beaconManager.startRangingBeacons(Region("all-beacons", Identifier.parse(idBeaconObstaculo), null, null))
+    }
+
+    @SuppressLint("LongLogTag")
+    override fun didRangeBeaconsInRegion(beacons: Collection<Beacon>, region: Region?) {
+
+
+        var beaconDistanciaTextView: TextView = findViewById(R.id.tvDistancia)
+        val beaconManager = BeaconManager.getInstanceForApplication(this)
+
+        for (beacon in beacons) {
+            var beaconScanner = beacon.id1.toString()
+
+            beaconDistanciaTextView.text = (Math.round(beacon.distance * 100.0) / 100.0).toString()
+            speakOut((Math.round(beacon.distance * 100.0) / 100.0).toString())
+
+            if(beaconScanner == IDBEACON_OBSTACULO){
+                Log.d("IDBEACON_OBSTACULO", IDBEACON_OBSTACULO)
+                Log.d("IDBEACON_OBSTACULO", beaconScanner)
+            }else
+            {
+                Log.d("IDBEACON_DESTINO", IDBEACON_DESTINO)
+            }
+            IDBEACON_OBSTACULO = ""
+
+            Log.d("didRangeBeaconsInRegion ", beacon.id1.toString())
+            Log.d("didRangeBeaconsInRegion ", beacon.distance.toString())
+            Log.d("didRangeBeaconsInRegion isDestino ", isDestino.toString())
+
+
+            if (isDestino) {
+                if (beacon.distance < 0.5) {
+                    Log.d("FragmentActivity.TAG", beacon.id1.toString())
+                    Log.d("FragmentActivity.TAG", beacon.distance.toString())
+                    try {
+                        // start ranging for beacons.  This will provide an update once per second with the estimated
+                        // distance to the beacon in the didRAngeBeaconsInRegion method.
+
+                        // beaconManager.startRangingBeacons(Region("all-beacons", null, null, null))
+                        // beaconManager.addRangeNotifier(this)
+
+                        // --beaconManager.stopMonitoring(beaconReferenceApplication.region)
+
+                        beaconManager.stopMonitoring(
+                            Region(
+                                "all-beacons",
+                                Identifier.parse("426c7565-4368-6172-6d42-6561636f6e93"),
+                                null,
+                                null
+                            )
+                        )
+                        vibratePhone()
+                        speakDestino()
+                    } catch (e: RemoteException) {
+                        Log.d("FragmentActivity.TAG", e.message.toString())
+                    }
+
+                }
+
+                //Log.d("FragmentActivity.TAG", "I see a beacon that is less than 5 meters away.")
+                // Perform distance-specific action here
+            }else{
+
+                if (beacon.distance < 0.5) {
+                try {
+
+                    beaconManager.stopMonitoring(
+                        Region(
+                            "all-beacons",
+                            Identifier.parse("426c7565-4368-6172-6d42-6561636f6e92"),
+                            null,
+                            null
+                        )
+                    )
+                    isDestino = true
+                    speakObstaculo()
+                    beaconManager.startRangingBeacons(Region("all-beacons", Identifier.parse("426c7565-4368-6172-6d42-6561636f6e93"), null, null))
+                } catch (e: RemoteException) {
+                    Log.d("FragmentActivity.TAG", e.message.toString())
+                }
+            }
+            }
+
+        }
     }
 
     override fun onInit(status: Int) {
@@ -151,12 +261,7 @@ class activity_user_detailed :  AppCompatActivity(), RangeNotifier, TextToSpeech
         didRangeBeaconsInRegion(beacons, beaconReferenceApplication.region)
     }
 
-    fun destinoObstaculo() {
-        val isDestino = false
-        val beaconManager = BeaconManager.getInstanceForApplication(this)
-        Log.d(TAG, "destinoObstaculo " + beaconManager.rangedRegions.size.toString() )
-        beaconManager.startRangingBeacons(Region("all-beacons", Identifier.parse("426c7565-4368-6172-6d42-6561636f6e92"), null, null))
-    }
+
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onRequestPermissionsResult(
@@ -326,38 +431,7 @@ class activity_user_detailed :  AppCompatActivity(), RangeNotifier, TextToSpeech
         val PERMISSION_REQUEST_FINE_LOCATION = 3
     }
 
-    override fun didRangeBeaconsInRegion(beacons: Collection<Beacon>, region: Region?) {
-        for (beacon in beacons) {
-            Log.d("FragmentActivity.TAG", beacon.id1.toString())
-            Log.d("FragmentActivity.TAG", beacon.distance.toString())
-            var beaconDistanciaTextView: TextView = findViewById(R.id.tvDistancia)
-            beaconDistanciaTextView.text = beacon.distance.toInt().toString()
-            speakOut(beacon.distance.toInt().toString())
-            if (beacon.distance < 0.5) {
-                Log.d("FragmentActivity.TAG", beacon.id1.toString())
-                Log.d("FragmentActivity.TAG", beacon.distance.toString())
 
-
-                try {
-                    // start ranging for beacons.  This will provide an update once per second with the estimated
-                    // distance to the beacon in the didRAngeBeaconsInRegion method.
-
-                    // beaconManager.startRangingBeacons(Region("all-beacons", null, null, null))
-                    // beaconManager.addRangeNotifier(this)
-                    val beaconManager = BeaconManager.getInstanceForApplication(this)
-                    // --beaconManager.stopMonitoring(beaconReferenceApplication.region)
-
-                    beaconManager.stopMonitoring(Region("all-beacons", Identifier.parse("426c7565-4368-6172-6d42-6561636f6e92"), null, null))
-                    vibratePhone()
-                    speakDestino()
-                } catch (e: RemoteException) {
-                    Log.d("FragmentActivity.TAG", e.message.toString())
-                }
-                //Log.d("FragmentActivity.TAG", "I see a beacon that is less than 5 meters away.")
-                // Perform distance-specific action here
-            }
-        }
-    }
     fun vibratePhone() {
         val vibratorService = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
         vibratorService.vibrate(1500)
@@ -382,6 +456,11 @@ class activity_user_detailed :  AppCompatActivity(), RangeNotifier, TextToSpeech
 
     private fun speakDestino() {
         val text = "Ha llegado a su destino"
+        tts!!.speak(text, TextToSpeech.QUEUE_FLUSH, null,"")
+    }
+
+    private fun speakObstaculo() {
+        val text = "Tenga cuidado"
         tts!!.speak(text, TextToSpeech.QUEUE_FLUSH, null,"")
     }
 }

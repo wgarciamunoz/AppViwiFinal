@@ -61,6 +61,7 @@ class MainActivity : AppCompatActivity() {
                         intent.putExtra("username", response[position].BeaconUUID)
                         intent.putExtra("descripcionDestino", response[position].BeaconDescripcionDestino)
                         intent.putExtra("descripcionObstaculo", response[position].BeaconDescripcionObstaculo)
+                        intent.putExtra("BeaconUUID", response[position].BeaconUUID)
                         startActivity(intent)
                     }
 
