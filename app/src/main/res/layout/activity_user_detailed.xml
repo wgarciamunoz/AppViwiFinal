@@ -1,59 +1,135 @@
-<?xml version="1.0" encoding="utf-8"?>
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:layout_marginRight="5dp"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="8dp"
+    app:cardMaxElevation="8dp"
+    app:cardPreventCornerOverlap="true"
+    app:cardUseCompatPadding="true">
+
+    <!-- In the above cardview widget cardelevation property will give elevation to your card view
+        card corner radius will provide radius to your card view card background color will give
+        background color to your card view card max elevation will give the cardview maximum
+        elevation card prevent corner overlap will add padding to CardView on v20 and before to
+        prevent intersections between the Card content and rounded corners. Card use compact padding
+        will add padding in API v21+ as well to have the same measurements with previous versions -->
+
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context=".activity_user_detailed">
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="3dp"
+        android:layout_marginBottom="5dp">
+
+        <TextView
+            android:id="@+id/tvDestino"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/dashed_border"
+            android:text="tvDestino"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvDetalle"
-            android:layout_width="205dp"
-            android:layout_height="55dp"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:text="Hola"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/beaconCount"
-            android:text="0 visible beacons:"
-            android:textAlignment="center"
-            android:layout_width="match_parent"
-            android:layout_height="20dp"/>
-        <ListView
-            android:id="@+id/beaconList"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
-        </ListView>
-        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_weight="0">
-            <Button
-                android:id="@+id/rangingButton"
-                android:onClick="rangingButtonTapped"
-                android:text="Disable Ranging"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                tools:ignore="OnClick">
-            </Button>
-            <Button
-                android:id="@+id/monitoringButton"
-                android:text="Disable Monitoring"
-                android:onClick="monitoringButtonTapped"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                tools:ignore="OnClick">
-            </Button>
-        </LinearLayout>
-    </LinearLayout>
+            android:layout_below="@id/tvDestino"
+            android:layout_marginTop="29dp"
+            android:background="@drawable/dashed_border"
+            android:text="tvDetalle"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvDistancia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvDetalle"
+            android:layout_marginTop="29dp"
+            android:background="@drawable/dashed_border"
+            android:text="tvDistancia"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>
+
+    <!--
+   <?xml version="1.0" encoding="utf-8"?>
+       <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+           xmlns:app="http://schemas.android.com/apk/res-auto"
+           xmlns:tools="http://schemas.android.com/tools"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:orientation="vertical"
+           tools:context=".activity_user_detailed"
+           >
+
+       <TextView
+           android:id="@+id/tvDestino"
+           android:layout_width="match_parent"
+           android:layout_height="55dp"
+           android:text="Hola"
+           android:textSize="20sp"
+           android:textStyle="bold"
+           app:layout_constraintBottom_toBottomOf="parent"
+           app:layout_constraintEnd_toEndOf="parent"
+           app:layout_constraintHorizontal_bias="0.5"
+           app:layout_constraintStart_toStartOf="parent"
+           app:layout_constraintTop_toTopOf="parent" />
+
+       <TextView
+           android:id="@+id/tvDetalle"
+           android:layout_width="match_parent"
+           android:layout_height="55dp"
+           android:text="Hola"
+           android:textSize="20sp"
+           android:textStyle="bold"
+           app:layout_constraintBottom_toBottomOf="parent"
+           app:layout_constraintEnd_toEndOf="parent"
+           app:layout_constraintHorizontal_bias="0.5"
+           app:layout_constraintStart_toStartOf="parent"
+           app:layout_constraintTop_toTopOf="parent" />
+           <TextView
+               android:id="@+id/beaconCount"
+               android:text="0 visible beacons:"
+               android:textAlignment="center"
+               android:layout_width="match_parent"
+               android:layout_height="20dp"/>
+           <ListView
+               android:id="@+id/beaconList"
+               android:layout_width="match_parent"
+               android:layout_height="0dp"
+               android:layout_weight="1">
+           </ListView>
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:orientation="horizontal"
+               android:layout_weight="0">
+               <Button
+                   android:id="@+id/rangingButton"
+                   android:onClick="rangingButtonTapped"
+                   android:text="Disable Ranging"
+                   android:layout_width="0dp"
+                   android:layout_height="50dp"
+                   android:layout_weight="1"
+                   tools:ignore="OnClick">
+               </Button>
+               <Button
+                   android:id="@+id/monitoringButton"
+                   android:text="Disable Monitoring"
+                   android:onClick="monitoringButtonTapped"
+                   android:layout_width="0dp"
+                   android:layout_height="50dp"
+                   android:layout_weight="1"
+                   tools:ignore="OnClick">
+               </Button>
+           </LinearLayout>
+       </LinearLayout>-->

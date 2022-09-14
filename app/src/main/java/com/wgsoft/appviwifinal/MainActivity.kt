@@ -14,6 +14,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 const val BASE_URL = "http://80.241.211.8/appviwiback/rest/"
+
 class MainActivity : AppCompatActivity() {
 
     private var tts: TextToSpeech? = null
@@ -58,6 +59,8 @@ class MainActivity : AppCompatActivity() {
                         val intent = Intent(this@MainActivity, activity_user_detailed::class.java)
                         intent.putExtra("name", response[position].BeaconNombre)
                         intent.putExtra("username", response[position].BeaconUUID)
+                        intent.putExtra("descripcionDestino", response[position].BeaconDescripcionDestino)
+                        intent.putExtra("descripcionObstaculo", response[position].BeaconDescripcionObstaculo)
                         startActivity(intent)
                     }
 

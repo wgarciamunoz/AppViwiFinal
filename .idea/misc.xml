@@ -3,9 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/wigam/AndroidStudioProjects/AppViwiFinal/app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="..\:/Users/wigam/AndroidStudioProjects/AppViwiFinal/app/src/main/res/layout/activity_user_detailed.xml" value="0.10989583333333333" />
-        <entry key="..\:/Users/wigam/AndroidStudioProjects/AppViwiFinal/app/src/main/res/layout/row_items.xml" value="0.10989583333333333" />
+        <entry key="..\:/Users/wigam/AndroidStudioProjects/AppViwiFinal/app/src/main/res/drawable/dashed_border.xml" value="0.241" />
+        <entry key="..\:/Users/wigam/AndroidStudioProjects/AppViwiFinal/app/src/main/res/layout/activity_main.xml" value="0.21148825065274152" />
+        <entry key="..\:/Users/wigam/AndroidStudioProjects/AppViwiFinal/app/src/main/res/layout/activity_user_detailed.xml" value="0.4" />
+        <entry key="..\:/Users/wigam/AndroidStudioProjects/AppViwiFinal/app/src/main/res/layout/activity_user_detailedcopia.xml" value="0.10989583333333333" />
+        <entry key="..\:/Users/wigam/AndroidStudioProjects/AppViwiFinal/app/src/main/res/layout/row_items.xml" value="0.2" />
+        <entry key="..\:/Users/wigam/AndroidStudioProjects/AppViwiFinal/app/src/main/res/xml/dashed_border.xml" value="0.25" />
       </map>
     </option>
   </component>

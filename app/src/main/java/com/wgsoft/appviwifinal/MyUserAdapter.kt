@@ -23,14 +23,14 @@ class MyUserAdapter(val context: Context, val userList:List<BeaconsItem>): Recyc
 
 
     class ViewHolder(itemView: View, listener: onItemClickListener):RecyclerView.ViewHolder(itemView) {
-        var tvName : TextView
-        var tvusername : TextView
-        var tvId : TextView
+        var tv_Destino : TextView
+//        var tvusername : TextView
+//        var tvId : TextView
 
         init {
-            tvName = itemView.findViewById(R.id.tvName)
-            tvusername = itemView.findViewById(R.id.tvusername)
-            tvId = itemView.findViewById(R.id.tvId)
+            tv_Destino = itemView.findViewById(R.id.tv_Destino)
+//            tvusername = itemView.findViewById(R.id.tvusername)
+//            tvId = itemView.findViewById(R.id.tvId)
             itemView.setOnClickListener{
                 listener.onItemClick(adapterPosition)
             }
@@ -46,9 +46,9 @@ class MyUserAdapter(val context: Context, val userList:List<BeaconsItem>): Recyc
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        holder.tvName.text = userList[position].BeaconNombre
-        holder.tvId.text = userList[position].BeaconTipo
-        holder.tvusername.text = userList[position].BeaconUUID
+        holder.tv_Destino.text = userList[position].BeaconNombre
+//        holder.tvId.text = userList[position].BeaconTipo
+//        holder.tvusername.text = userList[position].BeaconUUID
 
 
     }
