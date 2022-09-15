@@ -3,7 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/wigam/AndroidStudioProjects/AppViwiFinal/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.121" />
         <entry key="..\:/Users/wigam/AndroidStudioProjects/AppViwiFinal/app/src/main/res/drawable/dashed_border.xml" value="0.241" />
+        <entry key="..\:/Users/wigam/AndroidStudioProjects/AppViwiFinal/app/src/main/res/drawable/ic_launcher_background.xml" value="0.121" />
         <entry key="..\:/Users/wigam/AndroidStudioProjects/AppViwiFinal/app/src/main/res/layout/activity_main.xml" value="0.21148825065274152" />
         <entry key="..\:/Users/wigam/AndroidStudioProjects/AppViwiFinal/app/src/main/res/layout/activity_user_detailed.xml" value="0.4" />
         <entry key="..\:/Users/wigam/AndroidStudioProjects/AppViwiFinal/app/src/main/res/layout/activity_user_detailedcopia.xml" value="0.10989583333333333" />
