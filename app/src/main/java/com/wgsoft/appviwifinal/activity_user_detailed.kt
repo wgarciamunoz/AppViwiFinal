@@ -124,8 +124,9 @@ class activity_user_detailed :  AppCompatActivity(), RangeNotifier, TextToSpeech
 
                 if(beaconScanner == IDBEACON_DESTINO){
                     Log.d("didRangeBeaconsInRegion ", "IDBEACON_DESTINO " + IDBEACON_DESTINO)
-                    speakOut((Math.round(beacon.distance * 100.0) / 100.0).toString())
-                    beaconDistanciaTextView.text = (Math.round(beacon.distance * 100.0) / 100.0).toString()
+                    var distancia = (Math.round(beacon.distance * 100.0) / 100.0).toString()
+                    speakOut(distancia)
+                    beaconDistanciaTextView.text = distancia
                     if(beacon.distance < 0.5){
                     try {
                         beaconManager.stopMonitoring(beaconReferenceApplication.region)
@@ -144,12 +145,14 @@ class activity_user_detailed :  AppCompatActivity(), RangeNotifier, TextToSpeech
                 if(beaconScanner == IDBEACON_OBSTACULO){
                     Log.d("didRangeBeaconsInRegion ", beacon.id1.toString())
                     Log.d("didRangeBeaconsInRegion ", "IDBEACON_obs" + IDBEACON_OBSTACULO)
-                    beaconDistanciaTextView.text = (Math.round(beacon.distance * 100.0) / 100.0).toString()
+                    var distancia = (Math.round(beacon.distance * 100.0) / 100.0).toString()
 
-                    speakOutObstaculo((Math.round(beacon.distance * 100.0) / 100.0).toString())
-                    if(beacon.distance < 0.5){
+                    beaconDistanciaTextView.text = distancia
+                    speakOutObstaculo(distancia)
+                    if(beacon.distance < 0.8){
                         isDestino = true
                         speakObstaculoDestino(DESCRIPCION_DESTINO)
+                        sleepThread(3000)
                     }
 
                 }
@@ -157,6 +160,15 @@ class activity_user_detailed :  AppCompatActivity(), RangeNotifier, TextToSpeech
 
 
         }
+        }
+    }
+
+    private fun sleepThread(sec:Long) {
+        try {
+
+            Thread.sleep(sec)
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
         }
     }
 
