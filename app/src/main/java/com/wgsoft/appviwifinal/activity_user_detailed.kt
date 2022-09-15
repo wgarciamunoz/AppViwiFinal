@@ -6,10 +6,7 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
-import android.os.Build
-import android.os.Bundle
-import android.os.RemoteException
-import android.os.Vibrator
+import android.os.*
 import android.speech.tts.TextToSpeech
 import android.util.Log
 import android.widget.Button
@@ -19,7 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import org.altbeacon.beacon.*
 import java.util.*
-import kotlin.collections.ArrayList
+
 
 class activity_user_detailed :  AppCompatActivity(), RangeNotifier, TextToSpeech.OnInitListener {
     lateinit var beaconManager: BeaconManager
@@ -33,6 +30,7 @@ class activity_user_detailed :  AppCompatActivity(), RangeNotifier, TextToSpeech
     private var tts: TextToSpeech? = null
     var idBeacon: String =""
     var isDestino = false
+    var isFinal = false
     var idBeaconObstaculo = ""
     var idBeaconDestino = ""
 
@@ -114,24 +112,28 @@ class activity_user_detailed :  AppCompatActivity(), RangeNotifier, TextToSpeech
 
         for (beacon in beacons) {
             var beaconScanner = beacon.id1.toString()
-            beaconDistanciaTextView.text = (Math.round(beacon.distance * 100.0) / 100.0).toString()
+
 
 
 
             Log.d("didRangeBeaconsInRegion ", beacon.distance.toString())
             Log.d("didRangeBeaconsInRegion ", beaconScanner)
             Log.d("didRangeBeaconsInRegion isDestino ", isDestino.toString())
-
+            if(!isFinal){
             if (isDestino) {
 
                 if(beaconScanner == IDBEACON_DESTINO){
                     Log.d("didRangeBeaconsInRegion ", "IDBEACON_DESTINO " + IDBEACON_DESTINO)
                     speakOut((Math.round(beacon.distance * 100.0) / 100.0).toString())
+                    beaconDistanciaTextView.text = (Math.round(beacon.distance * 100.0) / 100.0).toString()
                     if(beacon.distance < 0.5){
                     try {
                         beaconManager.stopMonitoring(beaconReferenceApplication.region)
                         vibratePhone()
                         speakDestino()
+                        SystemClock.sleep(2000)
+                        isFinal = true
+                        stopTTS()
                     } catch (e: RemoteException) {
                         Log.d("FragmentActivity.TAG", e.message.toString())
                     }
@@ -142,6 +144,7 @@ class activity_user_detailed :  AppCompatActivity(), RangeNotifier, TextToSpeech
                 if(beaconScanner == IDBEACON_OBSTACULO){
                     Log.d("didRangeBeaconsInRegion ", beacon.id1.toString())
                     Log.d("didRangeBeaconsInRegion ", "IDBEACON_obs" + IDBEACON_OBSTACULO)
+                    beaconDistanciaTextView.text = (Math.round(beacon.distance * 100.0) / 100.0).toString()
 
                     speakOutObstaculo((Math.round(beacon.distance * 100.0) / 100.0).toString())
                     if(beacon.distance < 0.5){
@@ -153,6 +156,7 @@ class activity_user_detailed :  AppCompatActivity(), RangeNotifier, TextToSpeech
             }
 
 
+        }
         }
     }
 
@@ -191,6 +195,13 @@ class activity_user_detailed :  AppCompatActivity(), RangeNotifier, TextToSpeech
             tts!!.shutdown()
         }
         super.onDestroy()
+    }
+
+    fun stopTTS() {
+        if (tts != null) {
+            tts!!.stop()
+            tts!!.shutdown()
+        }
     }
 
     override fun onPause() {
