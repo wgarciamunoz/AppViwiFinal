@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
                     override fun onItemClick(position: Int) {
                         //Toast.makeText(this@MainActivity, "hola $position", Toast.LENGTH_SHORT).show()
                         val intent = Intent(this@MainActivity, activity_user_detailed::class.java)
-                        intent.putExtra("name", response[position].BeaconNombre)
+                        intent.putExtra("nombreBeacon", response[position].BeaconNombre)
                         intent.putExtra("username", response[position].BeaconUUID)
                         intent.putExtra("descripcionDestino", response[position].BeaconDescripcionDestino)
                         intent.putExtra("descripcionObstaculo", response[position].BeaconDescripcionObstaculo)

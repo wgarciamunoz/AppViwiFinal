@@ -45,6 +45,7 @@ class activity_user_detailed :  AppCompatActivity(), RangeNotifier, TextToSpeech
 
     var IDBEACON_DESTINO = ""
     var IDBEACON_OBSTACULO = ""
+    var DESCRIPCION_DESTINO = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,22 +73,28 @@ class activity_user_detailed :  AppCompatActivity(), RangeNotifier, TextToSpeech
         val nameDistancia : TextView = findViewById(R.id.tvDistancia)
 
         val bundle : Bundle?= intent.extras
-        val name = bundle!!.getString("name")
+        val nombreBeacon = bundle!!.getString("nombreBeacon")
         val username = bundle!!.getString("descripcionDestino")
         val descripcionObstaculo = bundle!!.getString("descripcionObstaculo")
+        val descripcionDestino = bundle!!.getString("descripcionDestino")
         var idBeaconDestino = bundle!!.getString("BeaconUUID")
 
         Log.d("onCreate", "BeaconUUID " + idBeaconDestino)
         nameDetalle.text = username + " " + descripcionObstaculo
-        nameDestino.text = name
+        nameDestino.text = nombreBeacon
         IDBEACON_OBSTACULO = "426c7565-4368-6172-6d42-6561636f6e92"
         destinoObstaculo(idBeaconObstaculo, idBeaconDestino)
+
+        if (descripcionDestino != null) {
+            DESCRIPCION_DESTINO = descripcionDestino
+        }
 
         if (idBeaconDestino != null) {
             IDBEACON_DESTINO = idBeaconDestino
         }
         sharedPreferences = getSharedPreferences(IDBEACON_DESTINO, Context.MODE_PRIVATE)
         sharedPreferences = getSharedPreferences(IDBEACON_OBSTACULO, Context.MODE_PRIVATE)
+        sharedPreferences = getSharedPreferences(DESCRIPCION_DESTINO, Context.MODE_PRIVATE)
 
     }
     fun destinoObstaculo(idBeaconObstaculo: String, idBeaconDestino: String?) {
@@ -112,6 +119,7 @@ class activity_user_detailed :  AppCompatActivity(), RangeNotifier, TextToSpeech
 
 
             Log.d("didRangeBeaconsInRegion ", beacon.distance.toString())
+            Log.d("didRangeBeaconsInRegion ", beaconScanner)
             Log.d("didRangeBeaconsInRegion isDestino ", isDestino.toString())
 
             if (isDestino) {
@@ -138,7 +146,7 @@ class activity_user_detailed :  AppCompatActivity(), RangeNotifier, TextToSpeech
                     speakOutObstaculo((Math.round(beacon.distance * 100.0) / 100.0).toString())
                     if(beacon.distance < 0.5){
                         isDestino = true
-                        speakObstaculo()
+                        speakObstaculoDestino(DESCRIPCION_DESTINO)
                     }
 
                 }
@@ -146,6 +154,10 @@ class activity_user_detailed :  AppCompatActivity(), RangeNotifier, TextToSpeech
 
 
         }
+    }
+
+    private fun speakObstaculoDestino(descripcionDestino: String) {
+        tts!!.speak(descripcionDestino, TextToSpeech.QUEUE_FLUSH, null,"")
     }
 
     private fun speakOutObstaculo(distancia: String) {
@@ -209,7 +221,7 @@ class activity_user_detailed :  AppCompatActivity(), RangeNotifier, TextToSpeech
         else {
             //beaconCountTextView.text = "Inside the beacon region."
         }
-        Log.d(TAG, "monitoring state changed to : $stateString")
+        Log.d("Observer", "monitoring state changed to : $stateString")
 //        val builder =
 //            AlertDialog.Builder(this)
 //        builder.setTitle(dialogTitle)
@@ -221,7 +233,7 @@ class activity_user_detailed :  AppCompatActivity(), RangeNotifier, TextToSpeech
     }
 
     val rangingObserver = Observer<Collection<Beacon>> { beacons ->
-        Log.d(TAG, "Ranged Observer: ${beacons.count()} beacons")
+        Log.d("rangingObserver", "Ranged Observer: ${beacons.count()} beacons")
         if (BeaconManager.getInstanceForApplication(this).rangedRegions.size > 0) {
 
             //beaconCountTextView.text = "Ranging enabled: ${beacons.count()} beacon(s) detected"
@@ -410,7 +422,7 @@ class activity_user_detailed :  AppCompatActivity(), RangeNotifier, TextToSpeech
     }
 
     fun didEnterRegion(region: Region?) {
-        Log.i("FragmentActivity.TAG", "I just saw an beacon for the first time!")
+        Log.i("didEnterRegion", "I just saw an beacon for the first time!")
         try {
             // start ranging for beacons.  This will provide an update once per second with the estimated
             // distance to the beacon in the didRAngeBeaconsInRegion method.
