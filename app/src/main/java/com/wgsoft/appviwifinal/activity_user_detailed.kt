@@ -20,7 +20,6 @@ import java.util.*
 
 class activity_user_detailed :  AppCompatActivity(), RangeNotifier, TextToSpeech.OnInitListener {
     lateinit var beaconManager: BeaconManager
-    //lateinit var beaconListView: ListView
     lateinit var beaconDistanciaTextView: TextView
     lateinit var monitoringButton: Button
     lateinit var rangingButton: Button
@@ -34,12 +33,7 @@ class activity_user_detailed :  AppCompatActivity(), RangeNotifier, TextToSpeech
     var idBeaconObstaculo = ""
     var idBeaconDestino = ""
 
-    // on below line we are creating
-    // a variable for shared preferences.
     lateinit var sharedPreferences: SharedPreferences
-
-    // on below line we are creating a variable
-    // for prefs key and email key and pwd key.
 
     var IDBEACON_DESTINO = ""
     var IDBEACON_OBSTACULO = ""
@@ -95,6 +89,7 @@ class activity_user_detailed :  AppCompatActivity(), RangeNotifier, TextToSpeech
         sharedPreferences = getSharedPreferences(DESCRIPCION_DESTINO, Context.MODE_PRIVATE)
 
     }
+
     fun destinoObstaculo(idBeaconObstaculo: String, idBeaconDestino: String?) {
         Log.d("destinoObstaculo", "destinoObstaculo " + idBeaconObstaculo)
         Log.d("destinoObstaculo", "idBeaconDestino " + idBeaconDestino)
