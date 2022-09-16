@@ -66,15 +66,14 @@ class activity_user_detailed :  AppCompatActivity(), RangeNotifier, TextToSpeech
 
         val bundle : Bundle?= intent.extras
         val nombreBeacon = bundle!!.getString("nombreBeacon")
-        val username = bundle!!.getString("descripcionDestino")
-        val descripcionObstaculo = bundle!!.getString("descripcionObstaculo")
         val descripcionDestino = bundle!!.getString("descripcionDestino")
+        val descripcionObstaculo = bundle!!.getString("descripcionObstaculo")
         var idBeaconDestino = bundle!!.getString("BeaconUUID")
 
         Log.d("onCreate", "BeaconUUID " + idBeaconDestino)
-        nameDetalle.text = username + " " + descripcionObstaculo
+        nameDetalle.text = descripcionObstaculo + " " + descripcionDestino
         nameDestino.text = nombreBeacon
-        IDBEACON_OBSTACULO = "426c7565-4368-6172-6d42-6561636f6e92"
+        IDBEACON_OBSTACULO = "426c7565-4368-6172-6d42-6561636f6e90"
         destinoObstaculo(idBeaconObstaculo, idBeaconDestino)
 
         if (descripcionDestino != null) {
