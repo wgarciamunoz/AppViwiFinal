@@ -1,15 +1,24 @@
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity_user_detailed"
+    android:background="@color/Background">
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
     android:layout_marginRight="5dp"
-    app:cardBackgroundColor="@color/white"
+    android:background="@color/Background"
+    app:cardBackgroundColor="@color/Background"
     app:cardCornerRadius="8dp"
     app:cardElevation="8dp"
     app:cardMaxElevation="8dp"
     app:cardPreventCornerOverlap="true"
-    app:cardUseCompatPadding="true">
+    app:cardUseCompatPadding="true"
+    tools:ignore="MissingConstraints">
 
     <!-- In the above cardview widget cardelevation property will give elevation to your card view
         card corner radius will provide radius to your card view card background color will give
@@ -33,6 +42,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/dashed_border"
             android:text="tvDestino"
+            android:textColor="#FFFFFF"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -44,6 +54,7 @@
             android:layout_marginTop="29dp"
             android:background="@drawable/dashed_border"
             android:text="tvDetalle"
+            android:textColor="#FFFFFF"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -55,11 +66,12 @@
             android:layout_marginTop="29dp"
             android:background="@drawable/dashed_border"
             android:text="tvDistancia"
+            android:textColor="#FFFFFF"
             android:textSize="20sp"
             android:textStyle="bold" />
     </RelativeLayout>
 </androidx.cardview.widget.CardView>
-
+</androidx.constraintlayout.widget.ConstraintLayout>
     <!--
    <?xml version="1.0" encoding="utf-8"?>
        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"

@@ -73,7 +73,7 @@ class activity_user_detailed :  AppCompatActivity(), RangeNotifier, TextToSpeech
         Log.d("onCreate", "BeaconUUID " + idBeaconDestino)
         nameDetalle.text = descripcionObstaculo + " " + descripcionDestino
         nameDestino.text = nombreBeacon
-        IDBEACON_OBSTACULO = "426c7565-4368-6172-6d42-6561636f6e90"
+        IDBEACON_OBSTACULO = "426c7565-4368-6172-6d42-6561636f6e92"
         destinoObstaculo(idBeaconObstaculo, idBeaconDestino)
 
         if (descripcionDestino != null) {
