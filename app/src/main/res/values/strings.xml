@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">AppViwi</string>
-
+    <string name="enabled_bluetooh">El Bluetooth se ha habilitado correctamente</string>
 </resources>

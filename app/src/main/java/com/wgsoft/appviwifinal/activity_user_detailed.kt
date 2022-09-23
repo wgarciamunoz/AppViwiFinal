@@ -86,7 +86,7 @@ class activity_user_detailed :  AppCompatActivity(), RangeNotifier, TextToSpeech
         sharedPreferences = getSharedPreferences(IDBEACON_DESTINO, Context.MODE_PRIVATE)
         sharedPreferences = getSharedPreferences(IDBEACON_OBSTACULO, Context.MODE_PRIVATE)
         sharedPreferences = getSharedPreferences(DESCRIPCION_DESTINO, Context.MODE_PRIVATE)
-
+        speakObstaculoDestino("Hola")
     }
 
     fun destinoObstaculo(idBeaconObstaculo: String, idBeaconDestino: String?) {
@@ -176,20 +176,20 @@ class activity_user_detailed :  AppCompatActivity(), RangeNotifier, TextToSpeech
     }
 
     override fun onInit(status: Int) {
-
+        Log.d(TAG, "onInit: ")
         if (status == TextToSpeech.SUCCESS) {
             // set US English as language for tts
             val locale = Locale("es", "ES")
             val result = tts!!.setLanguage(locale)
 
             if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                Log.e("TTS","The Language specified is not supported!")
+                Log.d("TTS","The Language specified is not supported!")
             } else {
                 //buttonSpeak!!.isEnabled = true
             }
 
         } else {
-            Log.e("TTS", "Initilization Failed!")
+            Log.d("TTS", "Initilization Failed!")
         }
 
     }
@@ -261,8 +261,6 @@ class activity_user_detailed :  AppCompatActivity(), RangeNotifier, TextToSpeech
         }
         didRangeBeaconsInRegion(beacons, beaconReferenceApplication.region)
     }
-
-
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onRequestPermissionsResult(
@@ -431,7 +429,6 @@ class activity_user_detailed :  AppCompatActivity(), RangeNotifier, TextToSpeech
         val PERMISSION_REQUEST_BLUETOOTH_CONNECT = 2
         val PERMISSION_REQUEST_FINE_LOCATION = 3
     }
-
 
     fun vibratePhone() {
         val vibratorService = getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
