@@ -41,7 +41,7 @@ class Beacon_Detailed :  AppCompatActivity(), RangeNotifier, TextToSpeech.OnInit
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_user_detailed)
+        setContentView(R.layout.activity_beacon_detailed)
 
         beaconReferenceApplication = application as BeaconReferenceApplication
 

@@ -42,10 +42,10 @@ class MainActivity : AppCompatActivity() {
             enableBluetooth()
         }
 
-        getMyDAta()
+        getBeacons()
     }
 
-    private fun getMyDAta() {
+    private fun getBeacons() {
         val retrofitBuilder = Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
             .baseUrl(BASE_URL)
