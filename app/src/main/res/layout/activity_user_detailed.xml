@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity_user_detailed"
+    tools:context=".Beacon_Detailed"
     android:background="@color/Background">
 
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"

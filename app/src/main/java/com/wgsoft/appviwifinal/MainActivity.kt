@@ -8,13 +8,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import android.util.Log
-import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.snackbar.Snackbar.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -26,7 +23,7 @@ const val BASE_URL = "http://80.241.211.8/appviwiback/rest/"
 class MainActivity : AppCompatActivity() {
 
     private var tts: TextToSpeech? = null
-    lateinit var  myAdapter : MyUserAdapter
+    lateinit var  beaconAdapter : BeaconAdapter
     lateinit var linearLayoutManager: LinearLayoutManager
     lateinit var recyclerView : RecyclerView
     private val pDialog: ProgressDialog? = null
@@ -62,14 +59,14 @@ class MainActivity : AppCompatActivity() {
             ) {
                 val response = response.body()!!
                 Log.d("MainAc", "response: " + response[0].BeaconNombre )
-                myAdapter = MyUserAdapter(baseContext, response)
-                myAdapter.notifyDataSetChanged()
-                recyclerView.adapter = myAdapter
+                beaconAdapter = BeaconAdapter(baseContext, response)
+                beaconAdapter.notifyDataSetChanged()
+                recyclerView.adapter = beaconAdapter
 
-                myAdapter.setOnItemClickListener(object : MyUserAdapter.onItemClickListener{
+                beaconAdapter.setOnItemClickListener(object : BeaconAdapter.onItemClickListener{
                     override fun onItemClick(position: Int) {
                         //Toast.makeText(this@MainActivity, "hola $position", Toast.LENGTH_SHORT).show()
-                        val intent = Intent(this@MainActivity, activity_user_detailed::class.java)
+                        val intent = Intent(this@MainActivity, Beacon_Detailed::class.java)
                         intent.putExtra("nombreBeacon", response[position].BeaconNombre)
                         intent.putExtra("username", response[position].BeaconUUID)
                         intent.putExtra("descripcionDestino", response[position].BeaconDescripcionDestino)

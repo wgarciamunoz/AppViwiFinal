@@ -32,7 +32,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity_user_detailed"
+            android:name=".Beacon_Detailed"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

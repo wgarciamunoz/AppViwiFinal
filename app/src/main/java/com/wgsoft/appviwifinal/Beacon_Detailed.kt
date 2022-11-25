@@ -18,7 +18,7 @@ import org.altbeacon.beacon.*
 import java.util.*
 
 
-class activity_user_detailed :  AppCompatActivity(), RangeNotifier, TextToSpeech.OnInitListener {
+class Beacon_Detailed :  AppCompatActivity(), RangeNotifier, TextToSpeech.OnInitListener {
     lateinit var beaconManager: BeaconManager
     lateinit var beaconDistanciaTextView: TextView
     lateinit var monitoringButton: Button

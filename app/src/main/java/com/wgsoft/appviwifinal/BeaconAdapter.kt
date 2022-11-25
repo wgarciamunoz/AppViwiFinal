@@ -1,15 +1,13 @@
 package com.wgsoft.appviwifinal
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 
-class MyUserAdapter(val context: Context, val userList:List<BeaconsItem>): RecyclerView.Adapter<MyUserAdapter.ViewHolder>()  {
+class BeaconAdapter(val context: Context, val userList:List<BeaconsItem>): RecyclerView.Adapter<BeaconAdapter.ViewHolder>()  {
 
     private lateinit var mListener : onItemClickListener
 
